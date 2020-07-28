@@ -5,6 +5,20 @@ const bcrypt = require('bcrypt')
 const {jwtSign, jwtVerify} = require('../helpers/jwt')
 
 class UserController {
+    static register(req, res, next) {
+        const newUser = {
+            email: req.body.email,
+            password: req.body.password,
+            role: req.body.role
+        }
+        User.create(newUser)
+        .then(function(data){
+            return res.status(201).json(data)
+        })
+        .catch(function(err){
+            next(err)
+        })
+    }
     static login (req, res, next) {
         const email = req.body.email
         const password = req.body.password
@@ -29,7 +43,10 @@ class UserController {
                 const token = jwtSign({ 
                     id: data.id, email: data.email, role: data.role
                 })
-                return res.status(200).json({access_token: token})    
+                return res.status(200).json({
+                    id: data.id,
+                    access_token: token
+                })    
             }
         })
         .catch(function(err){
