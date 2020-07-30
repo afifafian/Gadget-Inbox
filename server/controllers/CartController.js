@@ -4,15 +4,37 @@ const {Cart, User, Product} = require('../models')
 
 class CartController {
     static addCart(req, res, next) {
+        // jika req.userData.id === UserId existing dan;
+        // jika req.params.productId === ProductId existing;
+        // maka Cart update => quantity
         const userId = req.userData.id
         const newCart = {
             UserId: userId,
             ProductId: req.params.productId,
             quantity: req.body.quantity
         }
-        Cart.create(newCart)
+        Cart.findOne({
+            where:{
+                ProductId: newCart.ProductId,
+                UserId: newCart.UserId
+            }
+        })
         .then(function(data){
-            return res.status(201).json(data)
+            if (!data) {
+                return Cart.create(newCart)
+            } else {
+                return Cart.update(
+                    {quantity: +req.body.quantity + data.quantity},
+                    { where: { ProductId: newCart.ProductId, UserId: newCart.UserId }, returning: true }
+                )
+            }
+        })
+        .then(function(result){
+            if (Array.isArray(result)) {
+                return res.status(200).json(result[1])
+            } else {
+                return res.status(201).json(result)
+            }
         })
         .catch(function(err){
             next(err)            
