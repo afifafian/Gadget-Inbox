@@ -78,5 +78,14 @@ router.beforeEach((to, from, next) => {
   if (to.name === 'Login' && to.name === 'Register' && localStorage.token) next({ name: 'MainPage' });
   else next();
 });
+router.beforeEach((to, from, next) => {
+  if (to.name === 'CartList' && !localStorage.token) {
+    next({ name: 'Login' });
+    swal({ title: 'Whoops..', text: 'Login first, then start shooping! /(^ u ^)/', icon: 'info' });
+  } else if (to.name === 'AddCart' && !localStorage.token) {
+    next({ name: 'Login' });
+    swal({ title: 'Whoops..', text: 'Login first, then start shooping! /(^ u ^)/', icon: 'info' });
+  } else next();
+});
 
 export default router;

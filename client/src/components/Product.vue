@@ -2,7 +2,7 @@
   <div>
     <h2 class="title-page mt-4">Product List</h2>
     <div class="mt-5 row no-gutters">
-      <div v-for="(product,idx) in $store.state.products" :key="idx" class="card col-md-4" 
+      <div v-for="(product,idx) in $store.state.products" :key="idx" class="card col-md-4"
           style="width: 18rem;">
         <div class="card-body">
           <img :src="product.image_url" class="w3-round" style="width:250px;height:250px;">
@@ -39,8 +39,8 @@ export default {
     //   this.$store.dispatch('addCart', id);
     // },
     showModal() {
-      this.$store.commit('SHOW_MODAL')
-    }
+      this.$store.commit('SHOW_MODAL');
+    },
   },
   created() {
     this.$store.dispatch('getProducts');

@@ -17,7 +17,7 @@
               <button type="button" class="btn btn-warning">Login</button>
               </router-link>
           </li>
-          <li v-if="$store.state.isLoggedOut" 
+          <li v-if="$store.state.isLoggedOut"
             style="margin-left: 70px;" class="navbar-brand text-white">
               <a>Welcome, {{data}}</a>
           </li>
@@ -44,6 +44,9 @@ export default {
       localStorage.clear();
       this.$store.commit('SET_LOGOUT');
     },
+  },
+  created() {
+    this.$store.commit('SET_LOGIN');
   },
 };
 </script>

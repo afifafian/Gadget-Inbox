@@ -17,20 +17,20 @@
 
 <script>
 export default {
-    data() {
-        return {
-            quantity: 0,
-        };
+  data() {
+    return {
+      quantity: 0,
+    };
+  },
+  methods: {
+    addCart() {
+      const data = {
+        quantity: this.quantity,
+      };
+      this.$store.dispatch('addCart', data);
     },
-    methods: {
-        addCart() {
-            const data = {
-                quantity: this.quantity,
-            };
-            this.$store.dispatch('addCart', data);
-        },
-    },
-}
+  },
+};
 </script>
 
 <style></style>

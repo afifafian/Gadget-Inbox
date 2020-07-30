@@ -17,26 +17,26 @@
 
 <script>
 export default {
-    methods: {
-        editCart() {
-            const data = {
-                id: this.$store.state.idCart,
-                quantity: this.quantity,
-            };
-            this.$store.dispatch('editCart', data);
-        },
+  methods: {
+    editCart() {
+      const data = {
+        id: this.$store.state.idCart,
+        quantity: this.quantity,
+      };
+      this.$store.dispatch('editCart', data);
     },
-    computed: {
-        quantity: {
-            get () {
-                return this.$store.state.quantity;
-            },
-            set (quantity) {
-                this.$store.commit('EDIT_QUANTITY', quantity);
-            },
-        },
-    }
-}
+  },
+  computed: {
+    quantity: {
+      get() {
+        return this.$store.state.quantity;
+      },
+      set(quantity) {
+        this.$store.commit('EDIT_QUANTITY', quantity);
+      },
+    },
+  },
+};
 </script>
 
 <style></style>

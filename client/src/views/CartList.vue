@@ -9,7 +9,7 @@
       </h2>
     </div>
     <div class="mt-4 row no-gutters">
-    <div v-for="(cart,idx) in $store.state.carts" :key="idx" class="card col-md-4" 
+    <div v-for="(cart,idx) in $store.state.carts" :key="idx" class="card col-md-4"
       style="width: 18rem;">
       <div class="card-body">
         <img :src="cart.Product.image_url" class="w3-round" style="width:250px;height:250px;">
@@ -47,26 +47,26 @@ export default {
   },
   methods: {
     editCart(id) {
-      this.$store.dispatch('processEdit', id)
+      this.$store.dispatch('processEdit', id);
     },
     deleteCart(id) {
       swal({
-        title: "Delete this cart?",
-        text: "You will not be able to recover after Delete it!",
-        icon: "warning",
+        title: 'Delete this cart?',
+        text: 'You will not be able to recover after Delete it!',
+        icon: 'warning',
         buttons: true,
         dangerMode: true,
       })
-      .then((willDelete) => {
-        if (willDelete) {
-          swal("Succesfully Deleted Cart!", {
-            icon: "success",
-          });
-          this.$store.dispatch('deleteCart', id);
-        } else {
-          swal("Delete Cart Canceled!");
-        }
-      });
+        .then((willDelete) => {
+          if (willDelete) {
+            swal('Succesfully Deleted Cart!', {
+              icon: 'success',
+            });
+            this.$store.dispatch('deleteCart', id);
+          } else {
+            swal('Delete Cart Canceled!');
+          }
+        });
     },
   },
   created() {

@@ -42,8 +42,13 @@ export default new Vuex.Store({
       state.carts = state.carts.filter((cart) => cart.id !== id);
     },
     SET_LOGIN(state, data) {
-      state.isLoggedIn = false;
-      state.isLoggedOut = true;
+      if (localStorage.token) {
+        state.isLoggedOut = true;
+        state.isLoggedIn = false;
+      } else {
+        state.isLoggedOut = false;
+        state.isLoggedIn = true;
+      }
     },
     SET_LOGOUT(state, data) {
       state.isLoggedOut = false;
@@ -62,15 +67,15 @@ export default new Vuex.Store({
           role: payload.role,
         },
       })
-      .then((results) => {
-        console.log(results);
-        router.push({ name: 'Login' });
-        swal({ title: 'Success!', text: 'Succesfully Registered!\n Login to Continue', icon: 'success' });
-      })
-      .catch((err) => {
-        console.log(err.response);
-        swal({ title: "Warning!", text: 'All fields is required!', icon: "warning",});
-      });
+        .then((results) => {
+          console.log(results);
+          router.push({ name: 'Login' });
+          swal({ title: 'Success!', text: 'Succesfully Registered!\n Login to Continue', icon: 'success' });
+        })
+        .catch((err) => {
+          console.log(err.response);
+          swal({ title: 'Warning!', text: 'All fields is required!', icon: 'warning' });
+        });
     },
     login(context, payload) {
       axios({
@@ -81,30 +86,30 @@ export default new Vuex.Store({
           password: payload.password,
         },
       })
-      .then((results) => {
-        localStorage.setItem('token', results.data.access_token);
-        localStorage.setItem('id', results.data.id);
-        localStorage.setItem('email', results.data.email);
-        context.commit('SET_LOGIN');
-        router.push({ name: 'MainPage' });
-      })
-      .catch((err) => {
-        const validate = err.response.data.message;
-        swal({ title: 'Warning!', text: validate, icon: 'warning' });
-      });
+        .then((results) => {
+          localStorage.setItem('token', results.data.access_token);
+          localStorage.setItem('id', results.data.id);
+          localStorage.setItem('email', results.data.email);
+          context.commit('SET_LOGIN');
+          router.push({ name: 'MainPage' });
+        })
+        .catch((err) => {
+          const validate = err.response.data.message;
+          swal({ title: 'Warning!', text: validate, icon: 'warning' });
+        });
     },
     getProducts(context) {
       axios({
         method: 'GET',
         url: 'https://murmuring-wave-46445.herokuapp.com/productsbuyer',
       })
-      .then((results) => {
-        context.commit('SET_PRODUCT', results.data);
-      })
-      .catch((err) => {
-        const validate = err.response.data.message;
-        swal({ title: 'Warning!', text: validate, icon: 'warning' });
-      });
+        .then((results) => {
+          context.commit('SET_PRODUCT', results.data);
+        })
+        .catch((err) => {
+          const validate = err.response.data.message;
+          swal({ title: 'Warning!', text: validate, icon: 'warning' });
+        });
     },
     fetchCarts(context) {
       axios({
@@ -114,14 +119,13 @@ export default new Vuex.Store({
           access_token: localStorage.token,
         },
       })
-      .then((results) => {
-        context.commit('SET_CART', results.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        router.push({ name: 'Login' });
-        swal({ title: 'Whoops..', text: 'Login first, then start shooping! /(^ u ^)/', icon: 'info' });
-      });
+        .then((results) => {
+          context.commit('SET_CART', results.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        // router.push({ name: 'Login' });
+        });
     },
     addCart(context, payload) {
       axios({
@@ -136,15 +140,15 @@ export default new Vuex.Store({
           quantity: payload.quantity,
         },
       })
-      .then((results) => {
-        console.log(results);
-        router.push({ name: 'CartList' });
-      })
-      .catch((err) => {
-        console.log(err.response);
-        router.push({ name: 'Login' });
-        swal({ title: 'Whoops..', text: 'Login first, then start shooping! /(^ u ^)/', icon: 'info' });
-      });
+        .then((results) => {
+          console.log(results);
+          router.push({ name: 'CartList' });
+        })
+        .catch((err) => {
+          console.log(err.response);
+        // router.push({ name: 'Login' });
+        // swal({ title: 'Whoops..', text: 'Login first, then start shooping! /(^ u ^)/', icon: 'info' });
+        });
     },
     processEdit(context, payload) {
       axios({
@@ -154,12 +158,12 @@ export default new Vuex.Store({
           access_token: localStorage.token,
         },
       })
-      .then((results) => {
-        context.commit('GET_CARTID', results.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((results) => {
+          context.commit('GET_CARTID', results.data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     editCart(context, payload) {
       axios({
@@ -170,13 +174,13 @@ export default new Vuex.Store({
         },
         data: { quantity: payload.quantity },
       })
-      .then((results) => {
-        console.log(results.data);
-        router.push({name: 'CartList'});
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((results) => {
+          console.log(results.data);
+          router.push({ name: 'CartList' });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
     deleteCart(context, payload) {
       axios({
@@ -186,13 +190,13 @@ export default new Vuex.Store({
           access_token: localStorage.token,
         },
       })
-      .then((results) => {
-        console.log(results);
-        context.commit('DELETE_CART', payload);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((results) => {
+          console.log(results);
+          context.commit('DELETE_CART', payload);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     },
   },
   modules: {
