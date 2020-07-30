@@ -55,7 +55,7 @@ export default new Vuex.Store({
     register(context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3333/users/register',
+        url: 'https://murmuring-wave-46445.herokuapp.com/users/register',
         data: {
           email: payload.email,
           password: payload.password,
@@ -75,7 +75,7 @@ export default new Vuex.Store({
     login(context, payload) {
       axios({
         method: 'POST',
-        url: 'http://localhost:3333/users/login',
+        url: 'https://murmuring-wave-46445.herokuapp.com/users/login',
         data: {
           email: payload.email,
           password: payload.password,
@@ -96,7 +96,7 @@ export default new Vuex.Store({
     getProducts(context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/productsbuyer',
+        url: 'https://murmuring-wave-46445.herokuapp.com/productsbuyer',
       })
       .then((results) => {
         context.commit('SET_PRODUCT', results.data);
@@ -109,7 +109,7 @@ export default new Vuex.Store({
     fetchCarts(context) {
       axios({
         method: 'GET',
-        url: 'http://localhost:3333/cart',
+        url: 'https://murmuring-wave-46445.herokuapp.com/cart',
         headers: {
           access_token: localStorage.token,
         },
@@ -126,7 +126,7 @@ export default new Vuex.Store({
     addCart(context, payload) {
       axios({
         method: 'POST',
-        url: `http://localhost:3333/cart/${this.state.id}`,
+        url: `https://murmuring-wave-46445.herokuapp.com/cart/${this.state.id}`,
         headers: {
           access_token: localStorage.token,
         },
@@ -149,7 +149,7 @@ export default new Vuex.Store({
     processEdit(context, payload) {
       axios({
         method: 'GET',
-        url: `http://localhost:3333/cart/${payload}`,
+        url: `https://murmuring-wave-46445.herokuapp.com/cart/${payload}`,
         headers: {
           access_token: localStorage.token,
         },
@@ -164,7 +164,7 @@ export default new Vuex.Store({
     editCart(context, payload) {
       axios({
         method: 'PUT',
-        url: `http://localhost:3333/cart/${payload.id}`,
+        url: `https://murmuring-wave-46445.herokuapp.com/cart/${payload.id}`,
         headers: {
           access_token: localStorage.token,
         },
@@ -181,7 +181,7 @@ export default new Vuex.Store({
     deleteCart(context, payload) {
       axios({
         method: 'DELETE',
-        url: `http://localhost:3333/cart/${payload}`,
+        url: `https://murmuring-wave-46445.herokuapp.com/cart/${payload}`,
         headers: {
           access_token: localStorage.token,
         },
