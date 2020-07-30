@@ -45,6 +45,7 @@ class UserController {
                 })
                 return res.status(200).json({
                     id: data.id,
+                    email: data.email,
                     access_token: token
                 })    
             }

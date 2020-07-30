@@ -2,8 +2,7 @@
 
 const routes = require('express').Router();
 const ProductController = require('../controllers/ProductController')
-const {authentication} = require('../middlewares/auth')
 
-routes.get('/', authentication, ProductController.show)
+routes.get('/', ProductController.show)
 
 module.exports = routes
